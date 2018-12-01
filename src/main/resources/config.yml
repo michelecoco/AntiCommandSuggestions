@@ -1,0 +1,122 @@
+disable-commands-suggestions:
+  # Whether to restrict 1.13 commands suggestions
+  enabled: true
+  # Not blocked suggestions
+  # Use an empty list [] to block every suggestion)
+  whitelists:
+    # Whitelist for players without any of the following permissions
+    default:
+      - "spawn"
+      - "home"
+      - "msg"
+      - "reply"
+      - "r"
+      - "help"
+      - "money"
+      - "balance"
+      - "tpa"
+
+    extra:
+      # Whitelist for players with a specific permission.
+      # Permissions format: acs.whitelist.{SECTION-NAME}
+      # For example, the permission for this section is "acs.whitelist.staff"
+      staff:
+        - "fly"
+        - "kick"
+        - "ban"
+        - "mute"
+
+      # You can add as many extra whitelists as you want
+      # NOTE: changes are applied when the player joins the server
+
+disable-commands-execution:
+  blacklist: false
+  worldguard-regions:
+    - "pl"
+  residence-regions: []
+  commands:
+    - "pl"
+    - "plugins"
+    - "bukkit"
+    - "epl"
+    - "end"
+    - "server"
+    - "eplugins"
+    - "bukkit:help"
+    - "/?"
+    - "?"
+    - "bukkit ?"
+    - "calc"
+    - "icanhasbukkit"
+    - "about"
+    - "ver"
+    - "icanhasbukkit"
+    - "version"
+    - "bukkit:pl"
+    - "bukkit:plugins"
+    - "bukkit:?"
+    - "eabout"
+    - "bukkit:about"
+    - "bukkit:ver"
+    - "plugins ?"
+    - "calculate"
+    - "/solve"
+    - "/worldedit:/eval"
+    - "worldedit:/eval"
+    - "solve"
+    - "/calc"
+    - "stop"
+    - "restart"
+    - "eop"
+    - "essentials:op"
+    - "essentials:eop"
+    - "edeop"
+    - "superpickaxe"
+    - "/superpickaxe"
+    - "/sp"
+    - "sp"
+    - "essentials:deop"
+    - "essentials:edeop"
+    - "ver ?"
+    - "version ?"
+    - "icanhasbukkit ?"
+    - "op ?"
+    - "deop ?"
+    - "me"
+    - "minecraft:me"
+    - "minecraft:op"
+    - "minecraft:pl"
+    - "minecraft:deop"
+    - "minecraft:?"
+    - "minecraft:tp"
+    - "minecraft:defaultgamemode"
+    - "minecraft:execute"
+    - "e:help"
+    - "essentials:help"
+    - "essentials:ehelp"
+    - "minecraft:summon"
+    - "minecraft:ban"
+    - "minecraft:help"
+    - "evolve"
+    - "/evolve"
+    - "minecraft:give"
+    - "minecraft"
+    - "minecraft:"
+    - ""
+    - "we"
+    - "spartan"
+    - "worldedit"
+    - "superpickaxe"
+    - "/superpickaxe"
+    - "sp"
+    - "/sp"
+  # Sounds played when a player is prevented from executing one of the commands
+  sounds:
+    - "ENTITY_BLAZE_DEATH"
+
+Messages:
+  chat-prefix: "&7[&cACS&7]&r "
+  reload-no-perms: "&cYou don't have the permission to reload the configuration file!"
+  reload-success: "&aConfiguration reloaded with success!"
+  commands-usage: "&aUsage: &c/acs reload"
+  command-blocked: "&eYou don't have permission for that&c! &7 Contact &cOwner&a!"

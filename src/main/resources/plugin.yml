@@ -1,0 +1,14 @@
+main: ${project.groupId}.${project.artifactId}.${project.name}Plugin
+
+name: ${project.name}
+version: ${project.version}
+softdepend: [ProtocolLib, WorldGuard, Residence]
+
+author: SpaicyGaming
+
+api-version: 1.13
+
+commands:
+  anticommandsuggestions:
+    description: Main command.
+    aliases: [acs]
