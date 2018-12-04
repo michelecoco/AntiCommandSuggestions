@@ -25,7 +25,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     // Configuration values
     private boolean blacklist;
-    private List<String> worldGuardRegions, residenceRegions, commands;
+    private List<String> worldGuardRegions, residenceRegions, commands, messages;
     private List<Sound> sounds;
 
     public PlayerCommandPreprocessListener(AntiCommandSuggestionsPlugin main) {
@@ -45,6 +45,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         worldGuardRegions = loadStringList(configSection, "worldguard-regions", worldGuardInstalled);
         residenceRegions = loadStringList(configSection, "residence-regions", residenceInstalled);
         commands = configSection.getStringList("commands");
+        messages = ChatUtil.colorList(configSection.getStringList("messages"));
         sounds = configSection.getStringList("sounds").stream().map(Sound::valueOf).collect(Collectors.toList());
     }
 
@@ -69,15 +70,18 @@ public class PlayerCommandPreprocessListener implements Listener {
         if (!worldGuardInstalled && !residenceInstalled)
             return;
 
+        Player player = event.getPlayer();
+        if (player.hasPermission("acs.bypass.cmd"))
+            return;
+
         String fullCommand = event.getMessage().substring(1).toLowerCase();
 
         if (restrictedCommand(fullCommand)) {
-            Player player = event.getPlayer();
             boolean playerInsideRegion = isInsideRegion(player.getLocation());
 
             if ((blacklist && playerInsideRegion) || (!blacklist && !playerInsideRegion)) {
                 event.setCancelled(true);
-                ChatUtil.sendMessage(player, "command-blocked");
+                messages.forEach(player::sendMessage);
 
                 Location playerLoc = player.getLocation();
                 sounds.forEach(sound -> playerLoc.getWorld().playSound(playerLoc, sound, 0.5F, 1F));

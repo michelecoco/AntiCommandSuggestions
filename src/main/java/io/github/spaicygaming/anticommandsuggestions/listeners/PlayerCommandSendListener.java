@@ -45,6 +45,9 @@ public class PlayerCommandSendListener implements Listener {
         if (!enabled) return;
 
         Player player = event.getPlayer();
+        if (player.hasPermission("acs.bypass.tab"))
+            return;
+
         List<String> extraSuggestions = whitelists.keySet().stream()
                 .filter(player::hasPermission)
                 .map(whitelists::get)

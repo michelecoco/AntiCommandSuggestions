@@ -5,6 +5,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public final class ChatUtil {
 
     /**
@@ -56,6 +60,16 @@ public final class ChatUtil {
      */
     private static String colorString(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    /**
+     * Color the list of strings by translating it to ChatColor using the character '&'
+     *
+     * @param strings the list to color
+     * @return the colored list
+     */
+    public static List<String> colorList(List<String> strings) {
+        return new ArrayList<>(strings).stream().map(ChatUtil::colorString).collect(Collectors.toList());
     }
 
     /**

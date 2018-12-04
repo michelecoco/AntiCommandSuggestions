@@ -110,6 +110,8 @@ disable-commands-execution:
     - "/superpickaxe"
     - "sp"
     - "/sp"
+  messages:
+    - "&eYou don't have permission for that&c! &7 Contact &cOwner&a!"
   # Sounds played when a player is prevented from executing one of the commands
   sounds:
     - "ENTITY_BLAZE_DEATH"
@@ -119,4 +121,3 @@ Messages:
   reload-no-perms: "&cYou don't have the permission to reload the configuration file!"
   reload-success: "&aConfiguration reloaded with success!"
   commands-usage: "&aUsage: &c/acs reload"
-  command-blocked: "&eYou don't have permission for that&c! &7 Contact &cOwner&a!"
