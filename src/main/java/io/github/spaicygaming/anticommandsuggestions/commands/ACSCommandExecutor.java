@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class ACSCommandExecutor implements CommandExecutor {
 
+    // Main class instance
     private AntiCommandSuggestionsPlugin main;
 
     public ACSCommandExecutor(AntiCommandSuggestionsPlugin main) {

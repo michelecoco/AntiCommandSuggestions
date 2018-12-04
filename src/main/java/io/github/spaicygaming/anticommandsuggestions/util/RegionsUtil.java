@@ -22,13 +22,30 @@ import java.util.stream.Collectors;
 
 public final class RegionsUtil {
 
+    /**
+     * Prevent initialization
+     */
     private RegionsUtil() {
     }
 
+    /**
+     * Get the names of the regions at the given location
+     *
+     * @param location the location whose regions names get
+     * @return an empty list if there isn't any region
+     */
     public static List<String> getRegionsNames(Location location) {
         return getWGRegions(location).getRegions().stream().map(ProtectedRegion::getId).collect(Collectors.toList());
     }
 
+    /**
+     * Get get WorldGuard {@link ApplicableRegionSet} at the give location.
+     * <p>
+     * Support both WorldGuard v7 01 and 02 beta APIs
+     *
+     * @param loc the location of the ApplicableRegionSet to get
+     * @return the region set
+     */
     public static ApplicableRegionSet getWGRegions(Location loc) {
         RegionManager manager = getWGRegionManager(loc.getWorld());
         try {
@@ -50,6 +67,12 @@ public final class RegionsUtil {
         }
     }
 
+    /**
+     * Get the WorldGuard {@link RegionManager} associated with the world
+     *
+     * @param world the {@link World}
+     * @return the region manager
+     */
     public static RegionManager getWGRegionManager(World world) {
         return WorldGuard.getInstance().getPlatform().getRegionContainer().get(new BukkitWorld(world));
     }

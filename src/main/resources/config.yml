@@ -25,7 +25,11 @@ disable-commands-suggestions:
         - "kick"
         - "ban"
         - "mute"
-
+      vip:
+        - "fly"
+        - "kit vip"
+        - "tpa"
+        - "god"
       # You can add as many extra whitelists as you want
       # NOTE: changes are applied when the player joins the server
 

@@ -10,6 +10,7 @@ public class AntiCommandSuggestionsPlugin extends JavaPlugin {
 
     private static AntiCommandSuggestionsPlugin INSTANCE;
 
+    // Listeners instances
     private PlayerCommandSendListener playerCommandSendListener;
     private PlayerCommandPreprocessListener playerCommandPreprocessListener;
 
@@ -17,7 +18,7 @@ public class AntiCommandSuggestionsPlugin extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        // Disable if server version prior to 1.13
+        // Disable the plugin if the server version prior to 1.13
         String serverVersion = getServer().getBukkitVersion().split("-")[0];
         if (Double.parseDouble(serverVersion.split("\\.")[1]) < 13) {
             ChatUtil.alertConsole(String.format("The plugin isn't compatible with this server version! (%s)", serverVersion));
@@ -41,6 +42,9 @@ public class AntiCommandSuggestionsPlugin extends JavaPlugin {
         ChatUtil.sendStartupMessage("AntiCommandSuggestions has been enabled!");
     }
 
+    /**
+     * @return the main plugin class instance
+     */
     public static AntiCommandSuggestionsPlugin getInstance() {
         return INSTANCE;
     }
@@ -50,6 +54,9 @@ public class AntiCommandSuggestionsPlugin extends JavaPlugin {
         getLogger().info("AntiCommandSuggestions has been disabled :(");
     }
 
+    /**
+     * Reload the configuration files and its values
+     */
     public void reload() {
         super.reloadConfig();
         ChatUtil.loadChatPrefix();

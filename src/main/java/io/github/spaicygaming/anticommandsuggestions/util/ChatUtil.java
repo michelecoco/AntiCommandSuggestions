@@ -22,6 +22,9 @@ public final class ChatUtil {
      */
     private static AntiCommandSuggestionsPlugin main = AntiCommandSuggestionsPlugin.getInstance();
 
+    /**
+     * The bukkit {@link ConsoleCommandSender}
+     */
     private static ConsoleCommandSender console = main.getServer().getConsoleSender();
 
     /**
@@ -29,10 +32,12 @@ public final class ChatUtil {
      */
     private static String chatPrefix;
 
+    /**
+     * Update {@link #chatPrefix} with the colored value specified in the configuration file
+     */
     public static void loadChatPrefix() {
         chatPrefix = colorString(main.getConfig().getString("Messages.chat-prefix"));
     }
-
 
     /**
      * Send a message to the ConsoleCommandSender using the "startup" format.
@@ -63,7 +68,7 @@ public final class ChatUtil {
     }
 
     /**
-     * Color the list of strings by translating it to ChatColor using the character '&'
+     * Color the list of strings by calling {@link #colorString(String)} on each element
      *
      * @param strings the list to color
      * @return the colored list
@@ -93,6 +98,13 @@ public final class ChatUtil {
         return colorString(main.getConfig().getString("Messages." + messageName));
     }
 
+    /**
+     * Send a message to a {@link CommandSender}
+     *
+     * @param user       the user to send the message to
+     * @param messageKey the key the message is associated with
+     *                   (in the configuration file under the "Messages" parent section)
+     */
     public static void sendMessage(CommandSender user, String messageKey) {
         user.sendMessage(getMessage(messageKey));
     }
