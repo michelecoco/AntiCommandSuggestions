@@ -52,7 +52,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         blacklist = configSection.getBoolean("blacklist");
         worldGuardRegions = loadStringList(configSection, "worldguard-regions", worldGuardInstalled);
         residenceRegions = loadStringList(configSection, "residence-regions", residenceInstalled);
-        commands = configSection.getStringList("commands");
+        commands = configSection.getStringList("commands").stream().map(String::toLowerCase).collect(Collectors.toList());
         messages = ChatUtil.colorList(configSection.getStringList("messages"));
         sounds = configSection.getStringList("sounds").stream().map(Sound::valueOf).collect(Collectors.toList());
     }
@@ -111,13 +111,20 @@ public class PlayerCommandPreprocessListener implements Listener {
         }
     }
 
+    /**
+     * Check whether the use of this command is restricted
+     *
+     * @param command the command to check
+     * @return true if it is
+     */
     private boolean restrictedCommand(String command) {
+        String cmdToCheck = command;
         Stream<String> commandsStream = commands.stream();
+
         if (command.contains(" ")) {
-            return commandsStream.anyMatch(command::startsWith);
-        } else {
-            return commandsStream.anyMatch(command::equals);
+            cmdToCheck = command.split(" ")[0];
         }
+        return commandsStream.anyMatch(cmdToCheck::equals);
     }
 
     /**
