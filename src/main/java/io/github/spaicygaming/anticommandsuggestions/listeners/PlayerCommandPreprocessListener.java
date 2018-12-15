@@ -15,7 +15,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PlayerCommandPreprocessListener implements Listener {
 
@@ -27,7 +26,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     // Configuration values
     private boolean blacklist;
-    private List<String> worldGuardRegions, residenceRegions, commands, messages;
+    private List<String> worldGuardRegions, residenceRegions, commandsExact, commandsIgnoreArgs, messages;
     private List<Sound> sounds;
 
     /**
@@ -52,7 +51,8 @@ public class PlayerCommandPreprocessListener implements Listener {
         blacklist = configSection.getBoolean("blacklist");
         worldGuardRegions = loadStringList(configSection, "worldguard-regions", worldGuardInstalled);
         residenceRegions = loadStringList(configSection, "residence-regions", residenceInstalled);
-        commands = configSection.getStringList("commands").stream().map(String::toLowerCase).collect(Collectors.toList());
+        commandsExact = configSection.getStringList("commands.exact").stream().map(String::toLowerCase).collect(Collectors.toList());
+        commandsIgnoreArgs = configSection.getStringList("commands.ignore-args").stream().map(String::toLowerCase).collect(Collectors.toList());
         messages = ChatUtil.colorList(configSection.getStringList("messages"));
         sounds = configSection.getStringList("sounds").stream().map(Sound::valueOf).collect(Collectors.toList());
     }
@@ -118,13 +118,15 @@ public class PlayerCommandPreprocessListener implements Listener {
      * @return true if it is
      */
     private boolean restrictedCommand(String command) {
-        String cmdToCheck = command;
-        Stream<String> commandsStream = commands.stream();
+        String cmdNoArgs = command;
 
         if (command.contains(" ")) {
-            cmdToCheck = command.split(" ")[0];
+            if (commandsExact.contains(command))
+                return true;
+
+            cmdNoArgs = command.split(" ")[0];
         }
-        return commandsStream.anyMatch(cmdToCheck::equals);
+        return commandsIgnoreArgs.contains(cmdNoArgs);
     }
 
     /**
