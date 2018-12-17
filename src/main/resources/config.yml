@@ -41,6 +41,8 @@ disable-commands-execution:
   commands:
     exact:
       - "tp Gasha"
+      - "fly Gasha"
+      - "god Gasha"
     ignore-args:
       - "pl"
       - "plugins"
@@ -110,6 +112,9 @@ disable-commands-execution:
       - "/superpickaxe"
       - "sp"
       - "/sp"
+    starts-with:
+      - "ban Gasha"
+
   messages:
     - "&eYou don't have permission for that&c! &7 Contact &cOwner&a!"
   # Sounds played when a player is prevented from executing one of the commands

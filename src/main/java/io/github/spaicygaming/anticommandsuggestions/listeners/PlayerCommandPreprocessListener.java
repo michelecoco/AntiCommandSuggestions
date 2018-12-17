@@ -26,7 +26,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     // Configuration values
     private boolean blacklist;
-    private List<String> worldGuardRegions, residenceRegions, commandsExact, commandsIgnoreArgs, messages;
+    private List<String> worldGuardRegions, residenceRegions, messages, commandsExact, commandsIgnoreArgs, commandsStartsWith;
     private List<Sound> sounds;
 
     /**
@@ -53,6 +53,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         residenceRegions = loadStringList(configSection, "residence-regions", residenceInstalled);
         commandsExact = configSection.getStringList("commands.exact").stream().map(String::toLowerCase).collect(Collectors.toList());
         commandsIgnoreArgs = configSection.getStringList("commands.ignore-args").stream().map(String::toLowerCase).collect(Collectors.toList());
+        commandsStartsWith = configSection.getStringList("commands.starts-with").stream().map(String::toLowerCase).collect(Collectors.toList());
         messages = ChatUtil.colorList(configSection.getStringList("messages"));
         sounds = configSection.getStringList("sounds").stream().map(Sound::valueOf).collect(Collectors.toList());
     }
@@ -118,14 +119,20 @@ public class PlayerCommandPreprocessListener implements Listener {
      * @return true if it is
      */
     private boolean restrictedCommand(String command) {
+        // "starts-with" list check
+        if (commandsStartsWith.stream().anyMatch(command::startsWith))
+            return true;
+
         String cmdNoArgs = command;
 
         if (command.contains(" ")) {
+            // "exact" list check
             if (commandsExact.contains(command))
                 return true;
 
             cmdNoArgs = command.split(" ")[0];
         }
+        // "ignore-args" list check
         return commandsIgnoreArgs.contains(cmdNoArgs);
     }
 
